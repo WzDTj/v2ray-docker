@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  v2ray:
+    build:
+      context: ./v2ray
+      args:
+        - V2RAY_PORT
+        - V2RAY_ID
+        - V2RAY_ALTER_ID
+        - V2RAY_WS_PATH
+    env_file:
+      - .env
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        - NGINX_SERVER_NAME
+        - NGINX_SSL_CERTIFICATE
+        - NGINX_SSL_CERTIFICATE_KEY
+        - V2RAY_PORT
+        - V2RAY_WS_PATH
+    restart: always
+    ports:
+      - 443:443
+    env_file:
+      - .env
